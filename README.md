@@ -1,3 +1,1 @@
-DEMO
-
-https://hedgerwang.github.io/auto-camera-demo/
+- [Live DEMO](https://hedgerwang.github.io/auto-camera-demo/build/)

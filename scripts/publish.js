@@ -61,4 +61,11 @@ function main() {
   console.log(`Save file to ${outPathVersioned}`);
 }
 
-main();
+try {
+  main();
+} catch (ex) {
+  console.log('=================================================');
+  console.error(ex);
+  console.log('=================================================');
+  throw ex;
+}

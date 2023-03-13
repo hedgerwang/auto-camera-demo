@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 function main() {
-  const buildDir = path.resolve('../proj_auto_camera/build');
+  const buildDir = path.resolve('../idxp-camera-api/build');
   if (!fs.existsSync(buildDir)) {
     throw new Error(`${buildDir}:  project directory does not exist`);
   }

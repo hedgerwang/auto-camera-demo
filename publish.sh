@@ -1,4 +1,7 @@
+#!/bin/bash
+
 node scripts/publish.js 
 git add -A .
-git commit -m 'build'
+timestamp=$(date '+%Y-%m-%d-%H-%M')
+git commit -m "build $timestamp"
 git push origin master

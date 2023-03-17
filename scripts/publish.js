@@ -27,24 +27,30 @@ function main() {
     throw new Error(`${jsPath}: file does not exist`);
   }
 
-  const js = fs.readFileSync(jsPath).toString();
+  let js = fs.readFileSync(jsPath).toString();
   const css = fs.readFileSync(cssPath).toString();
 
   const workerRe = /[a-zA-Z0-9]+\.worker\.js/g;
-  const workerPaths = Array.from(new Set(js.match(workerRe)));
+  const workerNames = Array.from(new Set(js.match(workerRe)));
 
-  workerPaths.forEach((wp) => {
-    const wpath = `${buildDir}/${wp}`;
-    if (fs.existsSync(wpath)) {
-      const text = fs.readFileSync(`${buildDir}/${wp}`).toString();
-      const outPath = path.resolve(`./build/${wp}`);
+  workerNames.forEach((name) => {
+    const workerPath = `${buildDir}/${name}`;
+    if (fs.existsSync(workerPath)) {
+      const text = fs.readFileSync(`${buildDir}/${name}`).toString();
+      const outPath = path.resolve(`./build/${name}`);
       fs.writeFileSync(outPath, text);
+
+
+      js = js.split(name).join('/auto-camera-demo/build/' + name);
+
       console.log('write worker file to ' + outPath);
       // console.log(text);
     } else {
-      console.log(`worker file ${wpath} does not exist`);
+      console.log(`worker file ${workerPath} does not exist`);
     }
   });
+
+
 
   const newHTML = [
     html

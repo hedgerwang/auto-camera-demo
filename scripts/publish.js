@@ -40,8 +40,7 @@ function main() {
       const outPath = path.resolve(`./build/${name}`);
       fs.writeFileSync(outPath, text);
 
-
-      js = js.split(name).join('/auto-camera-demo/build/' + name);
+      // js = js.split(name).join('/auto-camera-demo/build/' + name);
 
       console.log('write worker file to ' + outPath);
       // console.log(text);
@@ -54,8 +53,8 @@ function main() {
     (function () {
       const __Worker__ = window.Worker;
       window.Worker = function WorkerWrapper(src) {
-        console.log('Load worker from ' + src );
-        return __Worker__(src);
+        console.log('Load worker from ' + src);
+        return new __Worker__(src);
       };
     })();\n\n
   ` + js;

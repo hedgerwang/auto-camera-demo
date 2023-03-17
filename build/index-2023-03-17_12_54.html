@@ -6,10 +6,13 @@
 
 
 function __createWebWorker__(src) {
-  src = window.location.pathname + src.replace(/\/+/, '/')
-  console.log('Load worker from ' + src);
-  return new Worker(src);
-}
+    if (src && src[0] === '/') {
+      src = src.substr(1);
+    }
+    src = window.location.pathname + src;
+    console.log('Load worker from ' + src);
+    return new Worker(src);
+  }
 
 
 /*! For license information please see main.382de84c.js.LICENSE.txt */

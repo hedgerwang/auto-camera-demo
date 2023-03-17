@@ -6,7 +6,10 @@
 
 
 function __createWebWorker__(src) {
-  src = window.location.pathname + src.replace(/\/+/, '/')
+  if (src && src[0] === '/') {
+    src = src.substr(1);
+  }
+  src = window.location.pathname + src;
   console.log('Load worker from ' + src);
   return new Worker(src);
 }

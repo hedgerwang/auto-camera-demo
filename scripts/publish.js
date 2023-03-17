@@ -1,6 +1,13 @@
 const fs = require('fs');
 const path = require('path');
 
+function __createWebWorker__(src) {
+  src = window.location.pathname + src.replace(/\/+/, '/')
+  console.log('Load worker from ' + src);
+  return new Worker(src);
+};
+
+
 function main() {
   const buildDir = path.resolve('../idxp-camera-app/build');
   if (!fs.existsSync(buildDir)) {
@@ -49,17 +56,10 @@ function main() {
     }
   });
 
-  js = `
-    (function () {
-      const __Worker__ = window.Worker;
-      window.Worker = function WorkerWrapper(src) {
-        src = window.location.pathname + src;
-        src = src.replace(/\\\/+/g, '\\/');
-        console.log('Load worker from ' + src);
-        return new __Worker__(src);
-      };
-    })();\n\n
-  ` + js;
+  js = js.replace(/new\sWorker\(/g, '__createWebWorker__(');
+
+
+  js = `\n\n\n${__createWebWorker__.toString()}\n\n\n` + js;
 
   const newHTML = [
     html

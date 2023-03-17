@@ -50,7 +50,15 @@ function main() {
     }
   });
 
-
+  js = `
+    (function () {
+      const __Worker__ = window.Worker;
+      window.Worker = function WorkerWrapper(src) {
+        console.log('Load worker from ' + src );
+        return __Worker__(src);
+      };
+    })();\n\n
+  ` + js;
 
   const newHTML = [
     html

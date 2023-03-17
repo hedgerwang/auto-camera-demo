@@ -53,6 +53,8 @@ function main() {
     (function () {
       const __Worker__ = window.Worker;
       window.Worker = function WorkerWrapper(src) {
+        src = window.location.pathname + src;
+        src = src.replace(/\/+/g, '\/');
         console.log('Load worker from ' + src);
         return new __Worker__(src);
       };

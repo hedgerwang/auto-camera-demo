@@ -30,6 +30,22 @@ function main() {
   const js = fs.readFileSync(jsPath).toString();
   const css = fs.readFileSync(cssPath).toString();
 
+  const workerRe = /[a-zA-Z0-9]+\.worker\.js/g;
+  const workerPaths = Array.from(new Set(js.match(workerRe)));
+
+  workerPaths.forEach((wp) => {
+    const wpath = `${buildDir}/${wp}`;
+    if (fs.existsSync(wpath)) {
+      const text = fs.readFileSync(`${buildDir}/${wp}`).toString();
+      const outPath = path.resolve(`./build/${wp}`);
+      fs.writeFileSync(outPath, text);
+      console.log('write worker file to ' + outPath);
+      // console.log(text);
+    } else {
+      console.log(`worker file ${wpath} does not exist`);
+    }
+  });
+
   const newHTML = [
     html
       .replace(/<script[^>]*>/g, `<script>`)

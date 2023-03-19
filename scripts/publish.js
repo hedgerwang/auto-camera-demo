@@ -74,8 +74,8 @@ async function main() {
   });
 
   js = js.replace(/new\sWorker\(/g, '__createWebWorker__(');
-
   js = `\n\n\n${__createWebWorker__.toString()}\n\n\n` + js;
+  js = js.replace(/static\/media\//g, 'auto-camera-demo/build/static/media/');
 
   const newHTML = [
     html

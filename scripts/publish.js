@@ -73,9 +73,11 @@ async function main() {
     }
   });
 
-  js = js.replace(/new\sWorker\(/g, '__createWebWorker__(');
-  js = `\n\n\n${__createWebWorker__.toString()}\n\n\n` + js;
-  js = js.replace(/static\/media\//g, 'auto-camera-demo/build/static/media/');
+  // js = js.replace(/new\sWorker\(/g, '__createWebWorker__(');
+  // js = `\n\n\n${__createWebWorker__.toString()}\n\n\n` + js;
+  const prefixToAdd = 'auto-camera-demo/build/';
+  js = js.replace(/static\/media\//g, prefixToAdd + 'static/media/');
+  js = js.replace(/(n\.p\+")(.*?\.worker\.js)/, `$1${prefixToAdd}$2`);
 
   const newHTML = [
     html

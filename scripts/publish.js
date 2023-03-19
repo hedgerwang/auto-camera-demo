@@ -1,14 +1,14 @@
-const fs = require('fs');
+// const fs = require('fs');
 const path = require('path');
+const fs = require('fs-extra');
 
 function __createWebWorker__(src) {
-  src = window.location.pathname + src.replace(/\/+/, '/')
+  src = window.location.pathname + src.replace(/\/+/, '/');
   console.log('Load worker from ' + src);
   return new Worker(src);
-};
+}
 
-
-function main() {
+async function main() {
   const buildDir = path.resolve('../idxp-camera-app/build');
   if (!fs.existsSync(buildDir)) {
     throw new Error(`${buildDir}:  project directory does not exist`);
@@ -40,6 +40,42 @@ function main() {
   const workerRe = /[a-zA-Z0-9]+\.worker\.js/g;
   const workerNames = Array.from(new Set(js.match(workerRe)));
 
+  // const svgRe = /[a-zA-Z0-9-_\.]+\.svg/g;
+  // const svgNames = Array.from(new Set(js.match(svgRe)));
+
+  const sourceDir = path.join(
+    '../',
+    'idxp-camera-app',
+    'build',
+    'static',
+    'media'
+  );
+  const destDir = path.join('build', 'static', 'media');
+
+  try {
+    await fs.ensureDir(destDir);
+    await fs.copy(sourceDir, destDir, { recursive: true, overwrite: true });
+    console.log('Copied files to ' + destDir);
+  } catch (err) {
+    console.error('An error occurred while copying the directory:', err);
+  }
+
+  // fs.ensureDir(destDir)
+  //   .then(() => {
+  //     return fs.copy(sourceDir, destDir, { recursive: true, overwrite: true });
+  //   })
+  //   .then(() => {
+  //     console.log('Directory copied successfully');
+  //   })
+  //   .catch((err) => {
+  //     console.error('An error occurred while copying the directory:', err);
+  //   });
+
+  console.log(sourceDir);
+  console.log(destDir);
+
+  return;
+
   workerNames.forEach((name) => {
     const workerPath = `${buildDir}/${name}`;
     if (fs.existsSync(workerPath)) {
@@ -57,7 +93,6 @@ function main() {
   });
 
   js = js.replace(/new\sWorker\(/g, '__createWebWorker__(');
-
 
   js = `\n\n\n${__createWebWorker__.toString()}\n\n\n` + js;
 

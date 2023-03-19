@@ -67,11 +67,7 @@ async function main() {
       const text = fs.readFileSync(`${buildDir}/${name}`).toString();
       const outPath = path.resolve(`./build/${name}`);
       fs.writeFileSync(outPath, text);
-
-      // js = js.split(name).join('/auto-camera-demo/build/' + name);
-
       console.log('write worker file to ' + outPath);
-      // console.log(text);
     } else {
       console.log(`worker file ${workerPath} does not exist`);
     }

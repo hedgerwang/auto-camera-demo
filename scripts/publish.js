@@ -58,23 +58,8 @@ async function main() {
     console.log('Copied files to ' + destDir);
   } catch (err) {
     console.error('An error occurred while copying the directory:', err);
+    return;
   }
-
-  // fs.ensureDir(destDir)
-  //   .then(() => {
-  //     return fs.copy(sourceDir, destDir, { recursive: true, overwrite: true });
-  //   })
-  //   .then(() => {
-  //     console.log('Directory copied successfully');
-  //   })
-  //   .catch((err) => {
-  //     console.error('An error occurred while copying the directory:', err);
-  //   });
-
-  console.log(sourceDir);
-  console.log(destDir);
-
-  return;
 
   workerNames.forEach((name) => {
     const workerPath = `${buildDir}/${name}`;

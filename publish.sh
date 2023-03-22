@@ -3,6 +3,7 @@
 cp ../idxp-camera-app/build/*.js build/
 cp -fr ../idxp-camera-app/build/advanced  build/
 cp -fr ../idxp-camera-app/build/advanced-threads  build/
+cp -fr ../idxp-camera-app/build/basic  build/
 
 node scripts/publish.js 
 git add -A .

@@ -79,10 +79,19 @@ async function main() {
   js = js.replace(/static\/media\//g, prefixToAdd + 'static/media/');
   js = js.replace(/([a-zA-Z0-9]+)(\.worker\.js)/g, `${prefixToAdd}$1$2`);
 
-  js = js.replace(
-    /(\/)(BlinkIDImageCaptureWasmSDK\.worker\.min\.js)/g,
-    `/${prefixToAdd}$2`
-  );
+  // js = js.replace(
+  //   /(\/)(BlinkIDImageCaptureWasmSDK\.worker\.min\.js)/g,
+  //   `/${prefixToAdd}$2`
+  // );
+
+  const base = `https://hedgerwang.github.io/auto-camera-demo/build`;
+  js =
+    `
+window.MB_CONFIG = {
+  WORKER_LOCATION: '${base}/BlinkIDImageCaptureWasmSDK.worker.min.js',
+  ENGINE_LOCAITON: '${base}/',
+};  
+  ` + js;
 
   const newHTML = [
     html

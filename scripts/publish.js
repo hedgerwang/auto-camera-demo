@@ -102,7 +102,7 @@ async function main() {
   const minutes = date.getMinutes().toString().padStart(2, '0');
   const dateString = `${year}-${month}-${day}_${hours}_${minutes}`;
 
-  const outPath = path.resolve('./build/index.html');
+  const outPath = path.resolve('./build/index-beta.html');
   const outPathVersioned = path.resolve(`./build/index-${dateString}.html`);
   fs.writeFileSync(outPath, newHTML);
   fs.writeFileSync(outPathVersioned, newHTML);
